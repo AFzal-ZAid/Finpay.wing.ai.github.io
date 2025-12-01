@@ -13,6 +13,346 @@
 </head>
 <body>
 
+    <style>
+
+/* Define custom properties (CSS variables) for colors - NO CHANGE */
+:root {
+    --color-razor-orange: #FF4500; /* NEW ACCENT COLOR: Orange Red */
+    --color-razor-orange-dark: #CC3700;
+    --color-razor-blue: #0052cc;
+    --color-razor-dark-blue: #003a95;
+    --color-light-blue: #e6efff;
+    --color-background: #f7f9fb;
+}
+
+/* Base styles - NO CHANGE */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-background);
+    margin: 0;
+    padding: 0;
+    /* Removed box-sizing: border-box here, as it should usually be on '*' or elements.
+       It's not strictly needed on body unless you have border/padding on the body itself. */
+}
+
+/* Accent Color Classes - NO CHANGE */
+.razor-orange {
+    color: var(--color-razor-orange);
+}
+.bg-razor-orange {
+    background-color: var(--color-razor-orange);
+}
+.hover\:bg-razor-orange-dark:hover {
+    background-color: var(--color-razor-orange-dark);
+}
+.hover\:text-razor-orange:hover {
+    color: var(--color-razor-orange);
+}
+
+/* Existing Blue for Background Wave/Shapes - NO CHANGE */
+.bg-razor-blue {
+    background-color: var(--color-razor-blue);
+}
+
+/* --- Responsive Hero Section Styles --- */
+.hero-bg {
+    background-color: var(--color-light-blue);
+    position: relative;
+    overflow: hidden;
+    /* Use responsive padding (e.g., clamp for smooth transition or REM/VW) */
+    padding-top: 3rem; /* Reduced padding for mobile */
+    padding-bottom: 3rem;
+}
+
+/* Pseudo-element for the large diagonal blue shape */
+.hero-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--color-razor-blue);
+    /* **RESPONSIVE CHANGE: Use VW for width and adjust skew for smaller screens** */
+    width: 60vw; /* Increased relative width for better coverage on small screens */
+    height: 100%;
+    transform: skewX(-20deg) translateX(10%);
+    transform-origin: top right;
+    z-index: 0;
+    box-shadow: -10px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.content-container {
+    position: relative;
+    z-index: 10;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    /* **RESPONSIVE CHANGE: Implement Flex or Grid for content layout** */
+    display: flex;
+    flex-direction: row; /* Default: content on left, card on right */
+    gap: 2rem;
+    align-items: center; /* Vertically align items */
+}
+
+/* Hero Carousel Card Styling */
+.dynamic-card-container {
+    background-color: var(--color-razor-dark-blue);
+    min-height: 400px; /* Adjusted min-height */
+    width: 100%;
+    /* **RESPONSIVE CHANGE: Use max-width relative to viewport or parent** */
+    max-width: 400px;
+    margin-left: auto;
+    border-radius: 0.75rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    background-image: linear-gradient(135deg, rgba(0, 58, 149, 0.5) 0%, rgba(0, 82, 204, 0.5) 100%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M-10,10 L110,10 M-10,30 L110,30 M-10,50 L110,50 M-10,70 L110,70 M-10,90 L110,90" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(%23p)" /></svg>');
+    background-size: cover;
+    transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+    transition: all 0.5s ease-in-out;
+}
+
+.dynamic-card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Styling for the founder's photo (placeholder) */
+.founder-img-placeholder {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    /* **RESPONSIVE CHANGE: Use VW for size and absolute position on small screens** */
+    width: 350px; /* Reduced size for better fit */
+    height: 350px;
+    background: center/cover no-repeat;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.9;
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+/* Floating bottom action bar - NO CHANGE */
+.floating-action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 10px;
+    border-top-left-radius: 1.2rem;
+    border-top-right-radius: 1.2rem;
+    box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.1);
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* --- FinPay Footer Variables & Setup - NO CHANGE --- */
+:root {
+    --finpay-primary: #1F2937;
+    --finpay-accent: #FF5722;
+    --finpay-text-light: #E5E7EB;
+    --finpay-heading: #FFFFFF;
+}
+
+.finpay-footer {
+    background-color: var(--finpay-primary);
+    padding: 3rem 0 0;
+    color: var(--finpay-text-light);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Reusing the common container style - NO CHANGE */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.footer-main-content {
+    display: grid;
+    /* 4 columns on desktop - NO CHANGE */
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 2rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #374151;
+}
+
+/* --- Column Styling - NO CHANGE --- */
+.footer-col { padding: 0; }
+.footer-logo { font-size: 1.8rem; font-weight: 800; color: var(--finpay-accent); margin-bottom: 0.5rem; }
+.footer-brand p { font-size: 0.9rem; margin-bottom: 1.5rem; }
+.footer-col h4 { color: var(--finpay-heading); font-size: 1.1rem; font-weight: 600; margin-bottom: 1.25rem; }
+.footer-col ul { list-style: none; padding: 0; }
+.footer-col ul li { margin-bottom: 0.75rem; }
+.footer-col a { color: var(--finpay-text-light); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+.footer-col a:hover { color: var(--finpay-accent); }
+
+/* --- Social Links - NO CHANGE --- */
+.social-links { display: flex; gap: 1rem; }
+.social-links a { color: var(--finpay-text-light); font-size: 1.2rem; }
+.social-links a:hover { color: var(--finpay-accent); }
+
+
+/* --- Responsive EMI Box Styles --- */
+.emi-box {
+    /* **RESPONSIVE CHANGE: Use max-width and width: 100%** */
+    width: 100%; /* Take full available width of parent */
+    max-width: 360px; /* Maintain desktop size as a cap */
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    /* **RESPONSIVE CHANGE: Added margin for centering when less than max-width** */
+    margin: 20px auto;
+}
+.emi-box h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+}
+.input-group { margin-top: 15px; }
+.input-group label { font-size: 14px; font-weight: 600; color: #333; }
+.input-group input {
+    width: 100%;
+    /* Use box-sizing to ensure padding/border don't exceed 100% width */
+    box-sizing: border-box; 
+    margin-top: 5px;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+.result-box {
+    background: #eef3ff;
+    padding: 18px;
+    margin-top: 20px;
+    border-radius: 15px;
+    text-align: center;
+}
+.result-box span {
+    display: block;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1e40ff;
+}
+.btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px;
+    background: #ff4b2b;
+    border: none;
+    border-radius: 12px;
+}
+
+
+/* --- Bottom Bar - NO CHANGE --- */
+.footer-bottom-bar {
+    background-color: #111827;
+    padding: 1rem 0;
+}
+
+.bottom-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.locale-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.locale-selector i {
+    color: var(--finpay-accent);
+}
+
+/* --- Media Queries for Hero Section and General Layout --- */
+@media (max-width: 1024px) {
+    /* Adjustments for smaller desktops/large tablets */
+    .hero-bg::after {
+        /* Slightly wider shape */
+        width: 50%;
+        transform: skewX(-15deg) translateX(5%);
+    }
+}
+
+@media (max-width: 768px) {
+    /* Tablet/Mobile Styles */
+    .hero-bg {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    /* Change hero content to stack vertically */
+    .content-container {
+        flex-direction: column;
+    }
+
+    .dynamic-card-container {
+        /* Center the card and remove 3D transform on smaller screens */
+        margin: 2rem auto;
+        transform: none; 
+    }
+
+    .hero-bg::after {
+        /* Make the blue shape take up more space on mobile and be less skewed */
+        width: 100%; 
+        height: 50%; /* Only cover the top half */
+        transform: skewX(0deg) translateY(-20%); /* Less aggressive transform */
+        transform-origin: top;
+    }
+
+    .founder-img-placeholder {
+        /* Hide or significantly shrink the placeholder image to not interfere with content */
+        display: none; 
+    }
+    
+    /* Footer responsiveness (already well-defined) */
+    .footer-main-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer-brand {
+        grid-column: 1 / -1;
+        margin-bottom: 1rem;
+    }
+    .bottom-bar-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    .copyright { order: 2; }
+    .locale-selector { order: 1; }
+}
+
+@media (max-width: 480px) {
+    /* Small Mobile Styles */
+    .hero-bg::after {
+        /* Even simpler shape on the smallest screens */
+        transform: none; 
+        height: 40%;
+    }
+
+    /* Footer responsiveness (already well-defined) */
+    .footer-main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+    </style>
+
     <!-- Header/Navigation (NOW STICKY) -->
     <header class="bg-white sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -247,7 +587,216 @@
     </div>
 </footer>
 
+<script>
+      // Initialize Lucide icons
+        lucide.createIcons();
 
+        // --- Dynamic Hero Content Data (UPDATED Images and Founders) ---
+        const heroSlides = [
+            {
+                // New Founder 1: Sarah, focusing on sustainable energy
+                heading: "Sustainable Energy Payments for India's boldest disruptors",
+                subtext: "Solar Financing | Subscription Billing | Integrated Dashboards",
+                founderImage: "https://placehold.co/450x450/2E8B57/ffffff?text=Sarah", // Sea Green
+                founderName: "Sarah",
+                cardContent: `
+                    <div class="p-2 dynamic-card-content">
+                        <!-- Card Header (Green) -->
+                        <div class="bg-[#A8F5D3] p-3 rounded-t-2xl text-center text-gray-900 font-bold">
+                            <p class="text-sm font-extrabold uppercase tracking-widest flex items-center justify-center">
+                                <i data-lucide="banknote" class="w-4 h-4 mr-2"></i> Solar Payments
+                            </p>
+                            <p class="text-xs text-gray-600 mt-0.5">POWERS SUNSPARK</p>
+                        </div>
+                        
+                        <!-- Middle Transaction Detail (White) -->
+                        <div class="bg-white p-6 rounded-xl text-gray-800 shadow-xl text-center">
+                            <div class="flex items-center space-x-4 mb-4">
+                                <!-- Product Image Placeholder -->
+                                <div class="w-16 h-16 bg-gray-100 rounded-lg flex-shrink-0">
+                                    <img src="https://placehold.co/64x64/2E8B57/ffffff?text=Solar" alt="Solar Panel" class="w-full h-full object-cover rounded-lg">
+                                </div>
+                                <div class="text-left flex-grow">
+                                    <p class="text-sm font-semibold text-gray-600">Subscription Bill</p>
+                                    <p class="text-2xl font-extrabold text-gray-900">&#8377; 1999</p>
+                                </div>
+                            </div>
+                            <div class="mt-4 border-t pt-3">
+                                <p class="text-xs font-bold text-gray-500 mb-2">Select Payment Method</p>
+                                <div class="grid grid-cols-2 gap-2 text-razor-orange text-sm font-semibold">
+                                    <span class="bg-orange-50 p-2 rounded-lg flex items-center justify-center"><i data-lucide="credit-card" class="w-4 h-4 mr-1"></i> Card</span>
+                                    <span class="bg-orange-50 p-2 rounded-lg flex items-center justify-center"><i data-lucide="scan-line" class="w-4 h-4 mr-1"></i> UPI ID</span>
+                                    <span class="bg-orange-50 p-2 rounded-lg flex items-center justify-center"><i data-lucide="globe" class="w-4 h-4 mr-1"></i> Netbanking</span>
+                                    <span class="bg-orange-50 p-2 rounded-lg flex items-center justify-center"><i data-lucide="calendar-check" class="w-4 h-4 mr-1"></i> EMI</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer/Source -->
+                        <div class="text-xs opacity-80 text-center font-bold pb-2">
+                            SUNSPARK ENERGY FOUNDER
+                        </div>
+                    </div>
+                `
+            },
+            {
+                // New Founder 2: Rohan, focusing on tech gadgets
+                heading: "Seamless In-Store Tech Payments for India's boldest disruptors",
+                subtext: "Contactless Payments | Inventory Sync | Multi-Store Support",
+                founderImage: "https://placehold.co/450x450/7A00B7/ffffff?text=Rohan", // Purple
+                founderName: "Rohan",
+                cardContent: `
+                    <div class="p-2 dynamic-card-content">
+                        <!-- Card Header (White) -->
+                        <div class="bg-white/90 p-3 rounded-t-2xl text-center text-gray-900 font-bold backdrop-blur-sm">
+                            <p class="text-sm font-extrabold uppercase tracking-widest flex items-center justify-center">
+                                <i data-lucide="store" class="w-4 h-4 mr-2"></i> Swift POS Terminal
+                            </p>
+                            <p class="text-xs text-gray-600 mt-0.5">POWERS GADGET GURU</p>
+                        </div>
+                        
+                        <!-- Middle QR Code Visualization (White terminal) -->
+                        <div class="text-center flex flex-col items-center justify-center flex-grow p-4">
+                            <div class="w-full bg-white p-6 rounded-2xl inline-block shadow-2xl relative">
+                                <!-- Simple stylized terminal drawing -->
+                                <div class="w-10 h-2 bg-gray-300 rounded mx-auto mb-2"></div>
+                                <div class="w-32 h-20 bg-gray-100 border border-gray-300 mx-auto mb-2 rounded p-1">
+                                    <!-- QR Code Placeholder -->
+                                    <svg class="w-full h-full text-gray-800" fill="currentColor" viewBox="0 0 24 24"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm2 6h4V5h-4v4zM13 13h8v8h-8v-8zm2 6h4v-4h-4v4z"/></svg>
+                                </div>
+                                <p class="text-xs font-semibold text-gray-600">Scan to Pay</p>
+                                <div class="w-20 h-2 bg-gray-300 rounded mx-auto mt-2"></div>
+                            </div>
+                            <p class="mt-4 text-lg font-semibold text-white">Instant Contactless</p>
+                        </div>
+
+                        <!-- Footer/Source -->
+                        <div class="text-xs opacity-80 text-center font-bold pb-2">
+                            GADGET GURU FOUNDER
+                        </div>
+                    </div>
+                `
+            },
+            {
+                // New Founder 3: Priya, focusing on global digital services
+                heading: "Global Freelance Payments for India's boldest disruptors",
+                subtext: "Receive USD, EUR, and GBP directly from international clients",
+                founderImage: "https://placehold.co/450x450/9370DB/ffffff?text=Priya", // Medium Purple
+                founderName: "Priya",
+                cardContent: `
+                    <div class="p-2 dynamic-card-content">
+                        <!-- Card Header (Pink) -->
+                        <div class="bg-[#E6E0F8] p-3 rounded-t-2xl text-center text-gray-900 font-bold">
+                            <p class="text-sm font-extrabold uppercase tracking-widest flex items-center justify-center">
+                                <i data-lucide="plane" class="w-4 h-4 mr-2"></i> Global Payments
+                            </p>
+                            <p class="text-xs text-gray-600 mt-0.5">POWERS DIGITAL DROPS</p>
+                        </div>
+                        
+                        <!-- Middle Card Form Simulation (White) -->
+                        <div class="bg-white p-6 rounded-xl text-gray-800 shadow-xl">
+                            <p class="text-sm font-bold mb-3 flex justify-between items-center">
+                                Pay Using Card
+                                <i data-lucide="credit-card" class="w-4 h-4 text-gray-400"></i>
+                            </p>
+                            
+                            <div class="space-y-2 text-sm text-gray-600">
+                                <div class="flex justify-between items-center border-b pb-2">
+                                    <span>**** 1092</span>
+                                    <span class="text-xs">08/25</span>
+                                </div>
+                                <p class="text-sm font-bold flex justify-between items-center border-b pb-2">
+                                    Pay via 
+                                    <img src="https://placehold.co/40x16/000000/ffffff?text=Google+Pay" alt="Google Pay" class="h-4">
+                                </p>
+                            </div>
+
+                            <div class="flex justify-between items-center mt-4 pt-3 border-t">
+                                <div>
+                                    <p class="text-sm text-gray-500">USD</p>
+                                    <!-- Updated text color -->
+                                    <p class="text-3xl font-bold text-razor-orange">$ 1,200.00</p>
+                                </div>
+                                <!-- Updated button background/hover color -->
+                                <button class="px-5 py-2 bg-razor-orange text-white font-semibold rounded-lg hover:bg-razor-orange-dark transition">Pay Now</button>
+                            </div>
+                        </div>
+
+                        <!-- Footer/Source -->
+                        <div class="text-xs opacity-80 text-center font-bold pb-2">
+                            DIGITAL DROPS FOUNDER
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        let currentSlide = 0;
+        const totalSlides = heroSlides.length;
+        const headingElement = document.getElementById('hero-heading');
+        const subtextElement = document.getElementById('hero-subtext');
+        const dynamicVizElement = document.getElementById('dynamic-viz');
+        const founderPortraitElement = document.getElementById('founder-portrait');
+
+        /**
+         * Updates the hero section content based on the currentSlide index.
+         */
+        function updateHeroContent() {
+            const slide = heroSlides[currentSlide];
+
+            // 1. Text Update (Instant for responsiveness)
+            headingElement.textContent = slide.heading;
+            subtextElement.textContent = slide.subtext;
+
+            // 2. Founder Image Update (Uses a smooth crossfade effect for placeholder)
+            founderPortraitElement.style.opacity = 0;
+            setTimeout(() => {
+                founderPortraitElement.style.backgroundImage = `url("${slide.founderImage}")`;
+                // Add a signature text overlay to the founder image placeholder
+                founderPortraitElement.innerHTML = `<span style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); font-size: 5rem; color: rgba(255, 255, 255, 0.4); font-family: cursive;">${slide.founderName}</span>`;
+                founderPortraitElement.style.opacity = 0.9;
+            }, 500);
+
+            // 3. Dynamic Card Update (With transition)
+            dynamicVizElement.style.opacity = 0;
+            dynamicVizElement.style.transform = 'perspective(1000px) rotateY(-10deg) rotateX(5deg) translateY(-20px)'; // Slide out start
+            
+            setTimeout(() => {
+                // Update dynamic card content
+                dynamicVizElement.innerHTML = slide.cardContent;
+
+                // Re-initialize Lucide icons within the new content
+                lucide.createIcons();
+
+                // Slide in effect
+                dynamicVizElement.style.opacity = 1;
+                dynamicVizElement.style.transform = 'perspective(1000px) rotateY(-5deg) rotateX(2deg)';
+            }, 500); 
+        }
+
+        /**
+         * Moves to the next slide in the carousel.
+         */
+        window.nextSlide = function() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateHeroContent();
+        }
+
+        /**
+         * Moves to the previous slide in the carousel.
+         */
+        window.prevSlide = function() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateHeroContent();
+        }
+
+        // Initialize content on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHeroContent();
+            // Start auto-slide every 6 seconds
+            setInterval(window.nextSlide, 4000); 
+        });
+</script>
    <script src="script.js"></script>
 </body>
 </html>
